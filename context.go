@@ -66,6 +66,10 @@ func getOrigin(r *http.Request) string {
 }
 
 func parseToken(token string) (Authorize, error) {
+	if len(token) == 0 {
+		return Authorize{}, nil
+	}
+
 	tokenSplit := strings.Split(token, ".")
 	if len(tokenSplit) < 2 {
 		return Authorize{}, errors.New("invalid token")
