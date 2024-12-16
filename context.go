@@ -17,7 +17,7 @@ type Context struct {
 }
 
 type Authorize struct {
-	UserId   string `json:"user_id"`
+	UserId   int    `json:"user_id"`
 	Username string `json:"username"`
 	Role     string `json:"role"`
 	Exp      int64  `json:"exp"`
@@ -54,7 +54,7 @@ func (c *Context) SetOrigin(origin string) {
 }
 
 func (c *Context) IsAuthorized() bool {
-	return c.authorize.UserId != "" && c.authorize.Username != "" && len(c.authToken) == 0
+	return c.authorize.UserId != 0 && c.authorize.Username != "" && len(c.authToken) == 0
 }
 
 func getToken(r *http.Request) string {
