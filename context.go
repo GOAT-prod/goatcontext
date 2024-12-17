@@ -2,6 +2,7 @@ package goatcontext
 
 import (
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -75,8 +76,13 @@ func parseToken(token string) (Authorize, error) {
 		return Authorize{}, errors.New("invalid token")
 	}
 
+	b, err := base64.StdEncoding.DecodeString(tokenSplit[1])
+	if err != nil {
+		return Authorize{}, err
+	}
+
 	var auth Authorize
-	if err := json.Unmarshal([]byte(tokenSplit[1]), &auth); err != nil {
+	if err = json.Unmarshal(b, &auth); err != nil {
 		return Authorize{}, errors.New("invalid token")
 	}
 
