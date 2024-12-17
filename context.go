@@ -76,7 +76,14 @@ func parseToken(token string) (Authorize, error) {
 		return Authorize{}, errors.New("invalid token")
 	}
 
-	b, err := base64.StdEncoding.DecodeString(tokenSplit[1])
+	userInfo := tokenSplit[1]
+	if len(userInfo)%4 != 0 {
+		for i := 0; i < len(userInfo)%4; i++ {
+			userInfo += "="
+		}
+	}
+
+	b, err := base64.StdEncoding.DecodeString(userInfo)
 	if err != nil {
 		return Authorize{}, err
 	}
