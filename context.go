@@ -55,7 +55,7 @@ func (c *Context) SetOrigin(origin string) {
 }
 
 func (c *Context) IsAuthorized() bool {
-	return c.authorize.UserId != 0 && c.authorize.Username != "" && len(c.authToken) == 0
+	return c.authorize.UserId != 0 && c.authorize.Username != "" && len(c.authToken) != 0
 }
 
 func getToken(r *http.Request) string {
